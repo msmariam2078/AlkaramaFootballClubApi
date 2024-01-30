@@ -39,12 +39,16 @@ return $this->hasMany(Plan::class);
 
 }
 
-public function replacments(){
+public function replacmentsAsOut(){
 
-    return $this->hasMany(Replacment::class);
+    return $this->hasMany(Replacment::class,"outplayer_id");
     
     }
+    public function replacmentsAsIn(){
 
+        return $this->hasMany(Replacment::class,"inplayer_id");
+        
+        }
 
 
 }

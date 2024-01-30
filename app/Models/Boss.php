@@ -5,32 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Information extends Model
+class Boss extends Model
 {
     use HasFactory;
-
     protected $fillable=[
 
  
-        'uuid',"title",'content','image','reads','type'
+        'uuid',"name",'start_year','image'
 
 
 ];
 protected $casts=[
 
     'uuid'=>'string',
-    "title"=>'string',
-    'content'=>'string',
+    "name"=>'string',
+    'start_year'=>'year',
     'image'=>'string',
-    'reads'=>'string',
-    'type'=>'string',
+    
 ];
-
-public function information_able(){
-
-
-    $this->morphTo();
- 
-   }
 
 }

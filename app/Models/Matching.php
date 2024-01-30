@@ -60,6 +60,16 @@ protected $fillable=[
                         return $this->hasMany(Replacment::class);
                         
                         }
+                        public function informations(){
+    
+                            return $this->morphMany(Information::class);
+                            
+                            }
+                            public function videos(){
+    
+                                return $this->morphMany(Video::class);
+                                
+                                }
 
 
 
