@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('wears', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->uuid('uuid');
 
             $table->string('image');
             $table->unsignedBigInteger("session_id");

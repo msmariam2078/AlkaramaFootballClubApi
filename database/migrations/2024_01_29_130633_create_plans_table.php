@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->uuid('uuid');
             $table->unsignedBigInteger("player_id")->nullable();
             $table->foreign("player_id")->references("id")->on("players")->onDelete("CASCADE");
             $table->unsignedBigInteger("match_id")->nullable();

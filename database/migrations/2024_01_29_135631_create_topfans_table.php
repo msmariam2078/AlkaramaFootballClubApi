@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('topfans', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->uuid('uuid');
             $table->string('name');
 
             $table->unsignedBigInteger("association_id");

@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('matches', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->uuid('uuid');
             $table->date("when");
             $table->enum('status',['not_started','finished']);
-            $table->string('plan');
+            $table->string('plan_image');
             $table->string('channel');
             $table->string('round')->unique();
             $table->string('play_ground');

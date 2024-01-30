@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('standings', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid');
+            $table->uuid('uuid');
 
             $table->integer('win');
             $table->integer('lose');
