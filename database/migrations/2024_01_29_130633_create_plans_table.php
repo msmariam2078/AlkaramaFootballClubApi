@@ -18,12 +18,12 @@ return new class extends Migration
             $table->uuid('uuid');
             $table->unsignedBigInteger("player_id")->nullable();
             $table->foreign("player_id")->references("id")->on("players")->onDelete("CASCADE");
-            $table->unsignedBigInteger("match_id")->nullable();
-            $table->foreign("match_id")->references("id")->on("matches")->onDelete("CASCADE");
+            $table->unsignedBigInteger("matching_id")->nullable();
+            $table->foreign("matching_id")->references("id")->on("matchings")->onDelete("CASCADE");
             $table->enum('status',['main','beanch']);
             
 
-            $table->unique(['match_id','player_id']);
+            $table->unique(['matching_id','player_id']);
 
 
 

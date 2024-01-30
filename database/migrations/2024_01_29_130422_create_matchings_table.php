@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('matches', function (Blueprint $table) {
+        Schema::create('matchings', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
             $table->date("when");
@@ -56,6 +56,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('matches');
+        Schema::dropIfExists('matchings');
     }
 };

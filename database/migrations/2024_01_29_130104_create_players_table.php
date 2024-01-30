@@ -23,7 +23,7 @@ return new class extends Migration
             $table->date('born');
             $table->string('from');
             $table->string('first_club');
-            $table->json('career');
+            $table->json('career')->nullable();
             $table->string('image');
             $table->unsignedBigInteger("sport_id");
             $table->foreign("sport_id")->references("id")->on("sports")->onDelete("CASCADE");

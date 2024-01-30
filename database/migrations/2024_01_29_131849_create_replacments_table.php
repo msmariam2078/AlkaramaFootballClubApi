@@ -20,9 +20,9 @@ return new class extends Migration
             $table->foreign("inplayer_id")->references("id")->on("players")->onDelete("CASCADE");
             $table->unsignedBigInteger("outplayer_id")->nullable();
             $table->foreign("outplayer_id")->references("id")->on("players")->onDelete("SET NULL");
-            $table->unsignedBigInteger("match_id");
-            $table->foreign("match_id")->references("id")->on("matches")->onDelete("CASCADE");
-            $table->unique(['match_id','inplayer_id']);
+            $table->unsignedBigInteger("matching_id");
+            $table->foreign("matching_id")->references("id")->on("matchings")->onDelete("CASCADE");
+            $table->unique(['matching_id','inplayer_id']);
             $table->timestamps();
         });
     }
