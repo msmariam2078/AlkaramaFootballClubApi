@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('replacments', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->unsignedBigInteger("inplayer_id");
             $table->foreign("inplayer_id")->references("id")->on("players")->onDelete("CASCADE");
             $table->unsignedBigInteger("outplayer_id")->nullable();

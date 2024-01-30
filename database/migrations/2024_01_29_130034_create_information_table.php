@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('information', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->string('title');
             $table->text('content');
             $table->string('image');
-            $table->string('type');
             $table->string('reads');
+            $table->enum('type',['regular','slider','news','strategy']);
+    
             $table->morphs('info_able');
 
             $table->timestamps();

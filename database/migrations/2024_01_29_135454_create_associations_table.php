@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('associations', function (Blueprint $table) {
             $table->id();
-            $table->string('poss');
+            $table->string('uuid');
+            $table->string('boss');
             $table->string('image');
             $table->string('descreption');
             $table->string('country');

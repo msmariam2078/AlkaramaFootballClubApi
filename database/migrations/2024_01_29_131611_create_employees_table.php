@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->string('name');
-            $table->string('job_type');
+            $table->enum('job_type',['manager','coach']);
             $table->string('work');
             $table->string('image');
             $table->unsignedBigInteger("sport_id");

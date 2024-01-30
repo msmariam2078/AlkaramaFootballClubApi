@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('primes', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->string('name');
             $table->string('descreption');
             $table->string('image');
-            $table->string('type');
+            $table->enum('type',['personal','club']);
             $table->unsignedBigInteger("session_id");
             $table->foreign("session_id")->references("id")->on("sessions")->onDelete("NO ACTION");
             $table->unsignedBigInteger("sport_id");

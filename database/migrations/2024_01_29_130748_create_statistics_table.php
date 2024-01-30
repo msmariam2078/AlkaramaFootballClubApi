@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('statistics', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->string('name')->unqiue();
             $table->json('value');
             $table->unsignedBigInteger("match_id")->unique();

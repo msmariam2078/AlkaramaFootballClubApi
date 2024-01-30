@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('standings', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
+
             $table->integer('win');
             $table->integer('lose');
             $table->integer('draw');
+            $table->integer('+/-');
             $table->integer('points');
             $table->integer('play');
             $table->unsignedBigInteger("club_id")->nullable();

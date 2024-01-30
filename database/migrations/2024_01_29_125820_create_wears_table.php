@@ -15,9 +15,13 @@ return new class extends Migration
     {
         Schema::create('wears', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
+
             $table->string('image');
             $table->unsignedBigInteger("session_id");
             $table->foreign("session_id")->references("id")->on("sessions")->onDelete("CASCADE");
+            $table->unsignedBigInteger("sport_id");
+            $table->foreign("sport_id")->references("id")->on("sports")->onDelete("CASCADE");
             $table->timestamps();
         });
     }

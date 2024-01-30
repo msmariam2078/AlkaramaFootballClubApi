@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('topfans', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->string('name');
-            $table->string('country');
+
             $table->unsignedBigInteger("association_id");
             $table->foreign("association_id")->references("id")->on("associations")->onDelete("CASCADE");
             $table->timestamps();
