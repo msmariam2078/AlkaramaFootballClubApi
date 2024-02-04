@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('uuid');
             $table->string('name')->unqiue();
             $table->json('value');
-            $table->unsignedBigInteger("matching_id")->unique();
+            $table->unsignedBigInteger("matching_id");
             $table->foreign("matching_id")->references("id")->on("matchings")->onDelete("CASCADE");
 
 

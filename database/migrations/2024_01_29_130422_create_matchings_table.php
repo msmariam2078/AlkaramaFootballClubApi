@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('matchings', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->date("when");
+            $table->datetime("when");
             $table->enum('status',['not_started','finished']);
             $table->string('plan_image');
             $table->string('channel');

@@ -34,22 +34,22 @@ class Sport extends Model
                 }
                 public function primes(){
 
-                    return $this->hasMany(Prime::class);
+             return $this->hasMany(Prime::class);
                     
-                    }
-                    public function associations(){
+              }
+        public function associations(){
 
-                        return $this->hasMany(Association::class);
+        return $this->hasMany(Association::class);
                         
-                        }
-                        public function wears(){
+            }
+        public function wears(){
 
-                            return $this->hasMany(Wear::class);
+            return $this->hasMany(Wear::class);
                             
-                            }
-                            public function players(){
+             }
+             public function players(){
 
-                                return $this->hasMany(Player::class);
+            return $this->hasMany(Player::class);
                                 
                                 }
 }

@@ -12,14 +12,14 @@ class Matching extends Model
 protected $fillable=[
 
  
-            'uuid',"when",'status','plan','channel','round','play_ground',"session_id","club1_id","club2_id"
+            'uuid',"when",'status','plan_image','channel','round','play_ground',"session_id","club1_id","club2_id"
     
     
     ];
     protected $casts=[
     
         'uuid'=>'string',
-        "when"=>'string',
+        "when"=>'datetime',
         'status'=>'string',
         'plan_image'=>'string',
         'channel'=>'string',
@@ -32,12 +32,12 @@ protected $fillable=[
 
     public function club1(){
 
-    return $this->belongTo(Club::class,'club1_id');
+    return $this->belongsTo(Club::class,'club1_id');
     
     }
     public function club2(){
 
-        return $this->belongTo(Club::class,'club2_id');
+        return $this->belongsTo(Club::class,'club2_id');
         
         }
         public function session(){

@@ -39,22 +39,22 @@ protected $fillable=[
         }
         public function matchesAsClub2(){
     
-            return $this->hasMany(Matching::class,"club2_id");
+        return $this->hasMany(Matching::class,"club2_id");
             
             }
             public function standings(){
     
-                return $this->hasMany(Standing::class);
+         return $this->hasMany(Standing::class);
                 
                 }
-                public function informations(){
+        public function informations(){
     
-                    return $this->morphMany(Information::class);
+            return $this->morphMany(Information::class);
                     
-                    }
-                    public function videos(){
+             }
+         public function videos(){
     
-                        return $this->morphMany(Video::class);
+            return $this->morphMany(Video::class);
                         
                         }
       
