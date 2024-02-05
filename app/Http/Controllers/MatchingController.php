@@ -51,6 +51,9 @@ class MatchingController extends Controller
          return $this->apiResponse($matchings);
          }
     }
+
+
+    
     public function indexByDate(Request $request)
     {
     $validate = Validator::make($request->all(),[

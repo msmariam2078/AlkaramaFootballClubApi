@@ -40,11 +40,15 @@ Route::get('/view/replacments',[App\Http\Controllers\ReplacmentController::class
 
 //...employee
 Route::get('/view',[App\Http\Controllers\EmployeeController::class,'show']);
+
 Route::post('/add/employee',[App\Http\Controllers\EmployeeController::class,'store']);
 Route::post('/edit/employee/{uuid}',[App\Http\Controllers\EmployeeController::class,'update']);
 Route::get('/delete/employee/{uuid}',[App\Http\Controllers\EmployeeController::class,'destroy']);
 
 Route::post('/add/statistics/{uuid}',[App\Http\Controllers\StatisticController::class,'store']);
+
 Route::post('/edit/statistics/{uuid}',[App\Http\Controllers\StatisticController::class,'update']);
+
 Route::get('/view/statistics/{uuid}',[App\Http\Controllers\StatisticController::class,'index']);
+
 
