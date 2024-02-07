@@ -20,8 +20,14 @@ class MatchingsResource extends JsonResource
          'second_club'=>$this->club2->name,
          'second_club_logo'=>$this->club2->logo,
          'play_ground'=>$this->play_ground,
-         'when'=>$this->when,
-         'round'=>$this->round
+         'when'=>$this->when->format('d M  Y H:i:S'),
+         'round'=>$this->round,
+         'status'=>$this->status,
+         'plan_image'=>$this->plan_image,
+         'channel'=>$this->channel,
+         'round'=>$this->round,
+         'play_ground'=>$this->play_ground,
+         "session"=>$this->session->name." ".$this->session->start_date->format('Y')."-".$this->session->end_date->format('Y')
         ];
     }
 }

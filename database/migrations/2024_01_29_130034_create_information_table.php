@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('reads');
             $table->enum('type',['regular','slider','news','strategy']);
     
-            $table->morphs('info_able');
+            $table->morphs('information_able');
 
             $table->timestamps();
         });

@@ -15,6 +15,7 @@ class StatisticResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid'=>$this->uuid,
             $this->name => [
 
          $this->matching->club1->name=>$this->value['club1'],

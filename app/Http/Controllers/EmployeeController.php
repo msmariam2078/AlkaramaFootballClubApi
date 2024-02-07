@@ -19,15 +19,15 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-
+    try{
     $employee=Employee::all();
-    if($employee->isEmpty())
-    return  $this->notFoundResponse("notfound employees");
-    else
-    {
+    $employee=EmployeeResource::collection($employee);
     return $this->apiResponse($employee); 
 
-    } 
+     } catch (\Throwable $th) {
+          
+    return $this->apiResponse(null,false,$th->getMessage(),500);
+    }
 
 
     }
@@ -52,20 +52,23 @@ class EmployeeController extends Controller
     
     public function store(Request $request)
     {
-        try {
+       
             $validate = Validator::make($request->all(),[
             'name' => 'string|min:2|max:20|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-            'job_type' => 'required|in:manager,coach',
+            'job_type' => 'required|string|in:manager,coach',
             'work' => 'required|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-            'image' => 'required|file|mimes:jpg,png,jpeg,jfif',
+            'image' => 'required|file|mimes:jpg,png,jpeg,jfif|max:2000',
             "sport_uuid"=>'required|string|exists:sports,uuid'
             ]);
             if($validate->fails()){
             return $this->requiredField($validate->errors()->first());    
             }
-                
+            try { 
+           
+            $image=$this->uploadImagePublic2($request,'employee','image');
+            if(!$image){
+            return  $this->apiResponse(null, false,'Failed to upload image',500);}
             $uuid=Str::uuid();
-            ($request->image)?$image=$this->uploadImagePublic2($request,'employee','image'):$image='';
             $sport_id=Sport::where('uuid',$request->input('sport_uuid'))->value('id');
             $employee=Employee::firstOrCreate(['uuid'=>$uuid,
             'name'=>$request->input('name'),
@@ -75,17 +78,9 @@ class EmployeeController extends Controller
             'sport_id'=>$sport_id,
     
         ]);
-        if($employee)
-        {
-            $employee=EmployeeResource::make($employee);
-            return $this->apiResponse($employee);
-         }
-         else{
-        return  $this->notFoundResponse("failed create employee");
-       
-
-
-    }  } catch (\Throwable $th) {
+        $employee=EmployeeResource::make($employee);
+        return $this->apiResponse($employee);
+         }  catch (\Throwable $th) {
       
         return $this->apiResponse(null,false,$th->getMessage(),500);
         }
@@ -110,12 +105,15 @@ class EmployeeController extends Controller
             if($request->img)
             { $this->deleteFile($employee->image);
             $image=$this->uploadImagePublic2($request,'employee','img');
-            
+            if(!$image)
+            {
+            return  $this->apiResponse(null, false,'Failed to upload image',500);
+            }
             $employee->image=$image;
             $employee->save();
             }
          
-        
+            return $this->apiResponse('uploaded successfully!');
         
         } catch (\Throwable $th) {
           

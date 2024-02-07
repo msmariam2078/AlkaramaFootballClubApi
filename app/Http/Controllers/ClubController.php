@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Traits\FileUploader;
 use App\Http\Resources\ClubResource;
 use Illuminate\Support\Str;
+
 class ClubController extends Controller
 { use GeneralTrait, FileUploader;
     /**
@@ -45,8 +46,8 @@ class ClubController extends Controller
         
         $validate = Validator::make($request->all(),[
         'name' => 'string|min:2|max:20|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-        'address' => 'required|string',
-        'logo' => 'required|file|mimes:jpg,png,jpeg,jfif',
+        'address' => 'required|string|min:20|max:100|regex:/^[A-Za-z]+(,)[A-Za-z]+(,)[A-Za-z0-9]+$/',
+        'logo' => 'required|file|mimes:jpg,png,jpeg,jfif|max:2000',
         "sport_uuid"=>'required|string|exists:sports,uuid'
         ]);
         if($validate->fails()){
@@ -60,8 +61,15 @@ class ClubController extends Controller
          }
 
         else{
-         $uuid=Str::uuid();
+        
         $sport_id=Sport::where('uuid',$request->input('sport_uuid'))->value('id');
+        $names=Club::where('sport_id',$sport_id)->pluck('name')->toArray();
+       if(in_array($request->name,$names))
+       {
+
+        return $this->requiredField('this club is already exist'); 
+       }
+        $uuid=Str::uuid();
         $club=Club::firstOrCreate(['uuid'=>$uuid,
         'name'=>$request->input('name'),
         'address'=>$request->input('address'),
@@ -89,9 +97,10 @@ class ClubController extends Controller
      */
     public function update(Request $request,$uuid)
     {  $validate = Validator::make($request->all(),[
+     
         'name' => 'string|min:2|max:20|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-        'address' => 'string',
-        'image' => 'file|mimes:jpg,png,jpeg,jfif',
+        'address' => 'string|regex:/^[A-Za-z]+(,)[A-Za-z]+(,)[A-Za-z0-9]+$/',
+        'image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
     
         ]);
         if($validate->fails()){
@@ -154,7 +163,7 @@ class ClubController extends Controller
        $club=Club::where('uuid',$uuid); 
        if(!$club)
        {
-       return $this->notFoundResponse("cannot deleted this club");
+       return $this->notFoundResponse("not found club");
        }
        else{
        $club->delete();

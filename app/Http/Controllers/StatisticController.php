@@ -26,10 +26,7 @@ class StatisticController extends Controller
         return $this->notFoundResponse('not found match');
         }
         $stat=Statistic::where('matching_id',$matching->id)->get();
-      if($stat->isEmpty()){
-        return $this->notFoundResponse('not found statictics');
-      }
-      $stat=StatisticResource::collection($stat);
+       $stat=StatisticResource::collection($stat);
       return $this->apiResponse($stat);
     }
 
@@ -47,7 +44,7 @@ class StatisticController extends Controller
      */
     public function store(Request $request,$uuid)
     {
-        $validate = Validator::make(['uuid'=>$uuid,
+        $validate = Validator::make([
            'name'=>$request->name, 
            'club1'=>$request->club1,
            'club2'=>$request->club2,  ],[
@@ -60,17 +57,14 @@ class StatisticController extends Controller
         if($validate->fails()){
             return $this->requiredField($validate->errors()->first()); }
         try{
-       $matching=Matching::where('uuid',$uuid)->where('status','finished')->first();
-     
-       if(!$matching)
-       {
-        return $this->notFoundResponse('not found match');
-       }
+        $matching=Matching::where('uuid',$uuid)->where('status','finished')->first();
+        if(!$matching)
+        {return $this->notFoundResponse('not found match');}
        $existStat=Statistic::where('matching_id',$matching->id)
        ->where('name',$request->name)->first();
        if($existStat)
        {
-        return $this->notFoundResponse('this Statictic has already exist ');
+        return $this->notFoundResponse('this Statistic has already exist ');
        }
     
         $uuidS=Str::uuid();
@@ -96,10 +90,7 @@ class StatisticController extends Controller
      * @param  \App\Models\Statistic  $statistic
      * @return \Illuminate\Http\Response
      */
-    public function show(Statistic $statistic)
-    {
-        //
-    }
+   
 
     /**
      * Show the form for editing the specified resource.
@@ -165,8 +156,23 @@ class StatisticController extends Controller
      * @param  \App\Models\Statistic  $statistic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Statistic $statistic)
+    public function destroy( $uuid)
     {
-        //
+        try{
+            $statistic=Statistic::where('uuid',$uuid)->first(); 
+            if(!$statistic)
+            {
+            return $this->notFoundResponse("not found");
+            }
+            else   {
+            $statistic->delete();
+            return $this->apiResponse("deleted successfully!");
+        
+         }
+        } catch (\Throwable $th) {
+                  
+            return $this->apiResponse(null,false,$th->getMessage(),500);
+            
     }
+}
 }

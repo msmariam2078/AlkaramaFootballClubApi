@@ -18,10 +18,13 @@ class PlayerResource extends JsonResource
             'uuid'=>$this->uuid,
             'image'=>$this->image,
             'name'=>$this->name,
-            'age'=>Carbon::createFromDate($this->born)->age."عام",
+            'born'=>$this->from."  ".$this->born->format('d M  Y'),
             'high'=>$this->high."cm",
+            'age'=>Carbon::createFromDate($this->born)->age."عام",
             'number'=>$this->number,
             'Play Center'=>$this->play,
+            'first_club'=>$this->first_club,
+            'career' =>$this->career
         
         ];
     }

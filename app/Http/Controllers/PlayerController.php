@@ -8,7 +8,7 @@ use App\Http\Traits\GeneralTrait;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Traits\FileUploader;
 use App\Http\Resources\PlayerResource;
-use App\Http\Resources\PlayerDetailsResource;
+
 class PlayerController extends Controller
 {
     use GeneralTrait ,FileUploader;
@@ -21,25 +21,26 @@ class PlayerController extends Controller
     {
 
       $players=Player::all(); 
-      if($players->isEmpty())
-      {
-      return $this->notFoundResponse('not found players');}
-      else{
-      $players= PlayerResource::collection($players);} 
-      return
-       $this->apiResponse($players);
+       $players= PlayerResource::collection($players);
+      return $this->apiResponse($players);
     }
+
 
     public function show ($uuid)
     {
-
+    try{
       $player=Player::where('uuid',$uuid)->first(); 
       if(!$player)
       {return $this->notFoundResponse('not found player ');}
       else{
-      $player= PlayerDetailsResource::make($player);} 
+      $player= PlayerResource::make($player);} 
       return
        $this->apiResponse($player);
+    }
+    catch (\Throwable $th) {
+   
+    return $this->apiResponse(null,false,$th->getMessage(),500);
+ }
     }
 
 
@@ -51,23 +52,14 @@ class PlayerController extends Controller
     $validate = Validator::make($request->all(),[
         
     'play' => 'required|string|in:goal_keeping,attack,defense,midline',
-     'sport_uuid' =>'required|integer|exists:sports,uuid']);
+    'sport_uuid' =>'required|string|exists:sports,uuid']);
     if($validate->fails()){
     return $this->requiredField($validate->errors()->first()); }
     try{
 
     $players=Player::where('play',$request->play)->where('sport_uuid',$request->sport_uuid)->get();
-  
-    if( $players->isEmpty()){
-    return $this->notFoundResponse('notfound players');
-    }
-
-     else{
     $players=PlayerResource::collection($players); 
     return $this->apiResponse($players);
-   
-
-     }
     }
     catch (\Throwable $th) {
    
@@ -81,15 +73,15 @@ class PlayerController extends Controller
         
         $validate = Validator::make($request->all(),[
         'name' => 'string|min:2|max:20|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-        'high' => 'required|integer|min:175|max:190',
+        'high' => 'required|integer|min:170|max:190',
         'play' => 'required|string|in:goal_keeping,attack,defense,midline',
         'number' =>'required|integer|unique:players,number|min:1|max:11',
         "born"=>'required|date|before_or_equal:2006-1-1|after_or_equal:1995-1-1',
-        'image' => 'required|file|mimes:jpg,png,jpeg,jfif',
+        'image' => 'required|file|mimes:jpg,png,jpeg,jfif|max:2000',
         "from"=>'required|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
         "first_club"=>'required|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
         "career"=>'required|array',
-        'career.*'=>'required|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+        'career.*'=>'required|min:10|max:50|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
         'sport_uuid'=>'required|string|exists:sports,uuid'
         ]);
         if($validate->fails()){
@@ -112,6 +104,7 @@ class PlayerController extends Controller
         "first_club"=>$request->first_club,
         "career"=>$request->career,
         'sport_id'=>$sport_id]);
+        $player=PlayerResource::make($player); 
         return $this->apiResponse($player);
     } else{
         return  $this->apiResponse(null, false,'Failed to upload image',500);
@@ -145,12 +138,16 @@ class PlayerController extends Controller
         return $this->requiredField($validate->errors()->first());    
         }
         try{
-            $image='';
+          
             $player=Player::where('uuid',$uuid)->first();
             $player->update($request->all());
             if($request->player_image)
             { $this->deleteFile($player->image);
             $image=$this->uploadImagePublic2($request,'players','player_image');
+            if(!$image)
+            {
+           return  $this->apiResponse(null, false,'Failed to upload image',500);
+            }
             $player->image=$image;
             $player->save();
             }
@@ -174,9 +171,9 @@ class PlayerController extends Controller
      * @param  \App\Models\Player  $player
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $player = Player::find($id);
+    public function destroy($uuid)
+    {  try{
+        $player = Player::where('uuid',$uuid)->first();
 
        if ($player) {
            $player->delete();
@@ -185,6 +182,10 @@ class PlayerController extends Controller
         return $this->notFoundResponse('notfound');
        
        }
+    } catch (\Throwable $th) {
+          
+        return $this->apiResponse(null,false,$th->getMessage(),500);
+        }
 
 
     }

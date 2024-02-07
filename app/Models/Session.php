@@ -53,7 +53,12 @@ class Session extends Model
                     }
                     public function informations(){
     
-                        return $this->morphMany(Information::class);
-                        
-                        }
+                        return $this->morphMany(Information::class,'information_able');
+                                
+                         }
+                         public function information(){
+                
+                            return $this->morphOne(Information::class,'information_able');
+                                    
+                             }
 }
