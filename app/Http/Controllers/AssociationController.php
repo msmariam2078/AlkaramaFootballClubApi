@@ -137,7 +137,7 @@ class AssociationController extends Controller
     { 
         $association=Association::find($uuid);
         $validate = Validator::make($request->all(),[
-        'boss' => 'string|min:2|max:20|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+        'boss' => 'string|min:2|max:20',
         'descreption' => 'string|min:10|max:255',
         'country' => 'string',
         'logo' => 'file|mimes:jpg,png,jpeg,jfif',

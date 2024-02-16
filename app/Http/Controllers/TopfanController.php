@@ -132,9 +132,9 @@ class TopfanController extends Controller
     {
         $topfan=Topfan::find($uuid);
         $validate = Validator::make($request->all(),[
-       'name'=>'string|min:2|max:20|required',
+       'name'=>'string|min:2|max:20',
     
-        "association_uuid"=>'required|string|exists:associations,uuid',
+        "association_uuid"=>'string|exists:associations,uuid',
    
     
         ]);

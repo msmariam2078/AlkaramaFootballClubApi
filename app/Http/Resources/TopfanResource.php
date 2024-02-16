@@ -17,7 +17,7 @@ class TopfanResource extends JsonResource
         return [
             'uuid'=>$this->uuid,
             'name'=>$this->name,
-            'association_uuid'=>$this->association->uuid,
+           
 
             
             ];

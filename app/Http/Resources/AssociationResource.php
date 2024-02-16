@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
+use App\Http\Resources\TopfanResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,6 +21,7 @@ class AssociationResource extends JsonResource
             'image'=>$this->image,
             'descreption'=>$this->descreption,
             'country'=>$this->country,
+            'memebers'=>TopfanResource::collection($this->topfans)
         ];
     }
 }
