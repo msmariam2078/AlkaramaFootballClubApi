@@ -20,7 +20,7 @@ class SessionResource extends JsonResource
         'name'=>$this->name,
         'start_date'=>$this->start_date,
         'end_date'=>$this->end_date,
-        'matches'=>MatchingsResource::collection($this->matchings),
+      
         'standings'=>StandingResource::collection($this->standings)
 
 

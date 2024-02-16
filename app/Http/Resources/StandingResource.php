@@ -15,7 +15,8 @@ class StandingResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'NameClub'=>$this->club->name,
+            'uuid'=>$this->uuid,
+            'club name'=>$this->club->name,
             'play'=>$this->play,
             'win'=>$this->win,
             'lose'=>$this->lose,

@@ -34,19 +34,13 @@ public function index(){
              return $this->requiredField($validate->errors()->first());    
              }
       try{
+        
      $session=Session::where('uuid',$request->session)->first();
-     dd($session);
-     if(!$session)
-     {
-      return    $this->apiResponse(null,false,['not found']);
 
-     }
+ dd($session);
       $wears=Wear::where('session_id',$session->id)->get();
  
-     if(!$wears)
-     {
-         return    $this->apiResponse(null,false,['not found']);
-     }
+  
      $wears=WearResource::collection($wears); 
      //dd($wears);
    return $this->apiResponse($wears);

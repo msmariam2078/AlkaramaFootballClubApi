@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Http\Resources\PlayerResource;
 class ReplacmentResource extends JsonResource
 {
     /**
@@ -15,8 +15,9 @@ class ReplacmentResource extends JsonResource
     public function toArray($request)
     {
         return [
-    'in_player'=>$this->inPlayer,
-    'out_player'=>$this->outPlayer
+    'uuid'=>$this->uuid,
+    'in_player'=>PlayerResource::make($this->inPlayer),
+    'out_player'=>PlayerResource::make($this->outPlayer)
 
 
 

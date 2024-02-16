@@ -25,11 +25,11 @@ class TopfanController extends Controller
     public function index()
     {
         $topfan=Topfan::all();
-        if($topfan->isEmpty()){
-        return $this->notFoundResponse(['not found ']);}
-         else{
+   
+   
+       
             $topfan=TopfanResource::collection( $topfan);
-         return $this->apiResponse($topfan);}
+         return $this->apiResponse($topfan);
     }
 
     /**

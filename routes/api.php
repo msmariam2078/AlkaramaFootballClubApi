@@ -54,11 +54,11 @@ Route::post('add/employee',[App\Http\Controllers\EmployeeController::class,'stor
 Route::post('edit/employee/{uuid}',[App\Http\Controllers\EmployeeController::class,'update']);
 Route::get('delete/employee/{uuid}',[App\Http\Controllers\EmployeeController::class,'destroy']);
 //...statistic
-Route::post('add/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'store']);
-Route::post('edit/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'update']);
-Route::get('view/match/statistics/{uuid}',[App\Http\Controllers\StatisticController::class,'index']);
-Route::get('view/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'show']);
-Route::get('remove/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'destroy']);
+Route::post('/add/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'store']);
+Route::post('/edit/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'update']);
+Route::get('/view/match/statistics/{uuid}',[App\Http\Controllers\StatisticController::class,'index']);
+Route::get('/view/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'show']);
+Route::get('/remove/statistic/{uuid}',[App\Http\Controllers\StatisticController::class,'destroy']);
 
 //...information
 Route::get('view/type/informations',[App\Http\Controllers\InformationController::class,'indexByType']);
@@ -78,12 +78,12 @@ Route::post('edit/boss/{uuid}',[App\Http\Controllers\BossController::class,'upda
 Route::get('delete/boss/{uuid}',[App\Http\Controllers\BossController::class,'destroy']);
 
 //...prime
-Route::get('view/prime/{uuid}',[App\Http\Controllers\PrimeController::class,'show']);
+Route::get('/view/prime/{uuid}',[App\Http\Controllers\PrimeController::class,'show']);
 Route::get('/view/primes',[App\Http\Controllers\PrimeController::class,'index']);
-Route::post('add/prime',[App\Http\Controllers\PrimeController::class,'store']);
-Route::post('edit/prime/{uuid}',[App\Http\Controllers\primeController::class,'update']);
-Route::get('view/type/prime',[App\Http\Controllers\primeController::class,'showBytype']);
-Route::get('remove/prime/{uuid}',[App\Http\Controllers\primeController::class,'destroy']);
+Route::post('/add/prime',[App\Http\Controllers\PrimeController::class,'store']);
+Route::post('/edit/prime/{uuid}',[App\Http\Controllers\PrimeController::class,'update']);
+Route::get('/view/type/prime',[App\Http\Controllers\PrimeController::class,'showBytype']);
+Route::get('/remove/prime/{uuid}',[App\Http\Controllers\PrimeController::class,'destroy']);
 //...plan
 
 Route::post('/add/plan/{uuid}',[App\Http\Controllers\PlanController::class,'store']);
@@ -98,18 +98,18 @@ Route::post('/add/session',[App\Http\Controllers\SessionController::class,'store
 Route::post('/edit/session/{uuid}',[App\Http\Controllers\SessionController::class,'update']);
 Route::get('/remove/sessions/{uuid}',[App\Http\Controllers\SessionController::class,'destroy']);
 //sport
-Route::get('view/sports',[App\Http\Controllers\SportController::class,'index']);
-Route::post('add/sport',[App\Http\Controllers\SportController::class,'store']);
-Route::post('edit/sport/{uuid}',[App\Http\Controllers\SportController::class,'update']);
-Route::get('view/sport/{uuid}',[App\Http\Controllers\SportController::class,'show']);
-Route::get('remove/sport/{uuid}',[App\Http\Controllers\SportController::class,'destroy']);
+Route::get('/view/sports',[App\Http\Controllers\SportController::class,'index']);
+Route::post('/add/sport',[App\Http\Controllers\SportController::class,'store']);
+Route::post('/edit/sport/{uuid}',[App\Http\Controllers\SportController::class,'update']);
+Route::get('/view/sport/{uuid}',[App\Http\Controllers\SportController::class,'show']);
+Route::get('/remove/sport/{uuid}',[App\Http\Controllers\SportController::class,'destroy']);
 
 //wear
-Route::get('view/wears',[App\Http\Controllers\WearController::class,'index']);
-Route::get('view/session/wears',[App\Http\Controllers\WearController::class,'ShowBySession']);
-Route::post('add/wear',[App\Http\Controllers\WearController::class,'store']);
-Route::post('edit/wear/{uuid}',[App\Http\Controllers\WearController::class,'update']);
-Route::get('remove/wear/{uuid}',[App\Http\Controllers\WearController::class,'destroy']);
+Route::get('/view/wears',[App\Http\Controllers\WearController::class,'index']);
+Route::get('/view/session/wears',[App\Http\Controllers\WearController::class,'showBySession']);
+Route::post('/add/wear',[App\Http\Controllers\WearController::class,'store']);
+Route::post('/edit/wear/{uuid}',[App\Http\Controllers\WearController::class,'update']);
+Route::get('/remove/wear/{uuid}',[App\Http\Controllers\WearController::class,'destroy']);
 
 //video..
 Route::post('/add/club/video/{uuid}',[App\Http\Controllers\VideoController::class,'clubVideo']);
@@ -131,14 +131,14 @@ Route::post('/edit/{uuid}',[App\Http\Controllers\AssociationController::class,'u
 Route::get('/association/remove/{uuid}',[App\Http\Controllers\AssociationController::class,'destroy']);
 // Routes of Topfans
 Route::get('/Topfans/view',[App\Http\Controllers\TopfanController::class,'index']);
-Route::get('/Topfans/view/{uuid}',[App\Http\Controllers\TopfanController::class,'show']);
-Route::post('/Topfans/add',[App\Http\Controllers\TopfanController::class,'store']);
-Route::post('/Topfans/edit/{uuid}',[App\Http\Controllers\TopfanController::class,'update']);
-Route::get('/Topfans/remove/{uuid}',[App\Http\Controllers\TopfanController::class,'destroy']);
+Route::get('/Topfan/view/{uuid}',[App\Http\Controllers\TopfanController::class,'show']);
+Route::post('/Topfan/add',[App\Http\Controllers\TopfanController::class,'store']);
+Route::post('/Topfan/edit/{uuid}',[App\Http\Controllers\TopfanController::class,'update']);
+Route::get('/Topfan/remove/{uuid}',[App\Http\Controllers\TopfanController::class,'destroy']);
 //standing
 Route::post('/add/standing',[App\Http\Controllers\StandingController::class,'store']);
 
 Route::post('/edit/standing/{uuid}',[App\Http\Controllers\StandingController::class,'update']);
-Route::post('/edit/standing/{uuid}',[App\Http\Controllers\StandingController::class,'update']);
+
 Route::get('/view/standing',[App\Http\Controllers\StandingController::class,'index']);
 Route::get('/remove/standing/{uuid}',[App\Http\Controllers\StandingController::class,'destroy']);

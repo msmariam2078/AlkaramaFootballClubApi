@@ -15,6 +15,7 @@ class EmployeeResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid'=>$this->uuid,
             'image'=>$this->image,
             'name'=>$this->name,
             'work'=>$this->work,

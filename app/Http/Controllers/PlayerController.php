@@ -32,7 +32,7 @@ class PlayerController extends Controller
       if(!$player)
       {return $this->notFoundResponse(['not found player ']);}
       else{
-      $player= PlayerDetailsResource::make($player);} 
+      $player= PlayerResource::make($player);} 
       return
        $this->apiResponse($player);
     }
