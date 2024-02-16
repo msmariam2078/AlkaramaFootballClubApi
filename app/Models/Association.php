@@ -13,7 +13,7 @@ class Association extends Model
         'uuid',
         'boss',
         'image',
-        'description',
+        'descreption',
         'country',
         'sport_id'
     ];
@@ -22,7 +22,7 @@ class Association extends Model
         'uuid' => 'string',
         'boss' => 'string',
         'image' => 'string',
-        'description' => 'string',
+        'descreption' => 'string',
         'country' => 'string',
         'sport_id' => 'integer',
     ];
@@ -36,9 +36,14 @@ class Association extends Model
     {
         return $this->hasMany(Topfan::class);
     }
-    public function videos(){
+    public function video(){
     
-        return $this->morphMany(Video::class);
+        return $this->morphMany(Video::class,'video_able');
         
         }
+        public function videos(){
+    
+            return $this->morphMany(Video::class,'video_able');
+            
+            }
 }

@@ -10,7 +10,7 @@ class Wear extends Model
     use HasFactory;
     protected $fillable=[
 
-        'uuid','image','seasone_id','sport_id'
+        'uuid','image','session_id','sport_id'
         
         
         
@@ -24,12 +24,12 @@ class Wear extends Model
 
             public function session(){
 
-                return $this->belongTo(Session::class);
+                return $this->belongsTo(Session::class);
                 
                 }
                 public function sport(){
 
-                    return $this->belongTo(Sport::class);
+                    return $this->belongsTo(Sport::class);
                     
                     }
 

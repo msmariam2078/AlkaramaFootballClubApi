@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources;
+use App\Http\Resources\VideoResource;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,7 +19,9 @@ class ClubResource extends JsonResource
            'uuid'=>$this->uuid, 
           'name'=>$this->name,
           'address'=>$this->address,
-          'logo'=>$this->logo
+          'logo'=>$this->logo,
+          'videos'=>VideoResource::collection($this->videos)
+          
 
 
 

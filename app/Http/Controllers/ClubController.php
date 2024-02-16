@@ -29,13 +29,21 @@ class ClubController extends Controller
  
      public function index(){
     $clubs=Club::all();
-    if($clubs->isEmpty()){
-    return $this->notFoundResponse('not found clubs');}
-     else{
-     $clubs=ClubResource::collection($clubs);
+    $clubs=ClubResource::collection($clubs);
      return $this->apiResponse($clubs);
-     }}
+     }
+     
+     public function show($uuid){
+        $club=Club::where('uuid',$uuid)->first();
+        if(!$club)
+        {
+            return $this->apiResponse(null,false,['not found'],404);
+        }
+        $club=ClubResource::make($club);
+         return $this->apiResponse($club);
+         }
  /**
+  * 
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -45,10 +53,10 @@ class ClubController extends Controller
     {
         
         $validate = Validator::make($request->all(),[
-        'name' => 'string|min:2|max:20|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-        'address' => 'required|string|min:20|max:100|regex:/^[A-Za-z]+(,)[A-Za-z]+(,)[A-Za-z0-9]+$/',
-        'logo' => 'required|file|mimes:jpg,png,jpeg,jfif|max:2000',
-        "sport_uuid"=>'required|string|exists:sports,uuid'
+        'name' => 'string|min:2|max:20',
+        'address' => 'string|min:7|max:100',
+        'logo' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
+        "sport_uuid"=>'string|exists:sports,uuid'
         ]);
         if($validate->fails()){
         return $this->requiredField($validate->errors()->first());    
@@ -57,7 +65,7 @@ class ClubController extends Controller
         $logo=$this->uploadImagePublic2($request,'club','logo');
         if(!$logo)
         {
-        return  $this->apiResponse(null, false,'Failed to upload image',500); 
+        return  $this->apiResponse(null, false,['Failed to upload image'],500); 
          }
 
         else{
@@ -67,7 +75,7 @@ class ClubController extends Controller
        if(in_array($request->name,$names))
        {
 
-        return $this->requiredField('this club is already exist'); 
+        return $this->unAuthorizeResponse(); 
        }
         $uuid=Str::uuid();
         $club=Club::firstOrCreate(['uuid'=>$uuid,
@@ -98,8 +106,8 @@ class ClubController extends Controller
     public function update(Request $request,$uuid)
     {  $validate = Validator::make($request->all(),[
      
-        'name' => 'string|min:2|max:20|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-        'address' => 'string|regex:/^[A-Za-z]+(,)[A-Za-z]+(,)[A-Za-z0-9]+$/',
+        'name' => 'string|min:2|max:20',
+        'address' => 'string',
         'image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
     
         ]);
@@ -110,7 +118,7 @@ class ClubController extends Controller
         $club=Club::where('uuid',$uuid)->first();
         if(!$club)
         {
-         return $this->notFoundResponse('not found replacements');
+         return $this->notFoundResponse(['not found replacements']);
 
         }
         else{
@@ -119,7 +127,7 @@ class ClubController extends Controller
         $this->deleteFile($club->logo);
         $logo=$this->uploadImagePublic2($request,'club','image');
         if(!$logo){
-        return  $this->apiResponse(null, false,'Failed to upload image',500);
+        return  $this->apiResponse(null, false,['Failed to upload image'],500);
         }
         else{
         $club->logo=$logo;
@@ -127,7 +135,7 @@ class ClubController extends Controller
  
         }
    
-    return  $this->apiResponse( 'updated successfuly');
+    return  $this->apiResponse( ['updated successfuly']);
     
     }}
     catch (\Throwable $th) {
@@ -163,11 +171,11 @@ class ClubController extends Controller
        $club=Club::where('uuid',$uuid); 
        if(!$club)
        {
-       return $this->notFoundResponse("not found club");
+       return $this->notFoundResponse(["not found club"]);
        }
        else{
        $club->delete();
-       return $this->apiResponse("deleted successfully!");
+       return $this->apiResponse(["deleted successfully!"]);
     }
 }
 }

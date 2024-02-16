@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Poss;
+use App\Models\Topfan;
 use Illuminate\Http\Request;
 
-class PossController extends Controller
+class TopfanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class PossController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Poss  $poss
+     * @param  \App\Models\Topfan  $topfan
      * @return \Illuminate\Http\Response
      */
-    public function show(Poss $poss)
+    public function show(Topfan $topfan)
     {
         //
     }
@@ -52,10 +52,10 @@ class PossController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Poss  $poss
+     * @param  \App\Models\Topfan  $topfan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Poss $poss)
+    public function edit(Topfan $topfan)
     {
         //
     }
@@ -64,10 +64,10 @@ class PossController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Poss  $poss
+     * @param  \App\Models\Topfan  $topfan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Poss $poss)
+    public function update(Request $request, Topfan $topfan)
     {
         //
     }
@@ -75,10 +75,10 @@ class PossController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Poss  $poss
+     * @param  \App\Models\Topfan  $topfan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Poss $poss)
+    public function destroy(Topfan $topfan)
     {
         //
     }

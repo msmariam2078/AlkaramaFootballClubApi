@@ -12,7 +12,7 @@ class Video extends Model
     protected $fillable=[
 
  
-        'uuid',"url","discription"
+        'uuid',"url","desc"
 
 
 ];
@@ -20,7 +20,7 @@ protected $casts=[
 
     'uuid'=>'string',
     'url'=>'string',
-    'discription'=>'string',
+    'desc'=>'string',
    
 ];
 

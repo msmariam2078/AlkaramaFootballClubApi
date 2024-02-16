@@ -37,7 +37,8 @@ class MatchingController extends Controller
         if($validate->fails()){
         return $this->requiredField($validate->errors()->first()); }
 
-        $matchings=Matching::where('status',$request->status);
+        $matchings=Matching::where('status',$request->status)->get();
+      
         $matchings=MatchingsResource::collection($matchings);
          return $this->apiResponse($matchings);
          
@@ -69,7 +70,7 @@ class MatchingController extends Controller
        try
        { $matching=Matching::where('uuid',$uuid)->first();
         if(!$matching){
-        return $this->notFoundResponse('not found match');
+        return $this->notFoundResponse(['not found match']);
          }
          else{
     
@@ -90,9 +91,9 @@ class MatchingController extends Controller
         'when' => 'required|date',
         'status'=>'required|string|in:not_started,finished',
         'plan_image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
-        'channel'=>'required|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+        'channel'=>'required|string',
         'round'=>'required|string',
-        'play_ground'=>'required|min:4|max:20|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+        'play_ground'=>'required|min:4|max:20|string',
         'session_uuid'=>'required|string|exists:sessions,uuid',
         'club1_uuid'=>'required|string|exists:clubs,uuid',
         'club2_uuid'=>'required|string|exists:clubs,uuid|not_in:'.$request->club1_uuid
@@ -106,7 +107,7 @@ class MatchingController extends Controller
         {
         $image=$this->uploadImagePublic2($request,'match','plan_image');
         if(!$image)
-        return $this->apiResponse(null, false,'Failed to upload image',500);
+        return $this->apiResponse(null, false,['Failed to upload image'],500);
   
         }
         
@@ -115,9 +116,9 @@ class MatchingController extends Controller
         $session_id=Session::where('uuid',$request->input('session_uuid'))->value('id');
         $club1_id=Club::where('uuid',$request->input('club1_uuid'))->value('id');
         $club2_id=Club::where('uuid',$request->input('club2_uuid'))->value('id');
-        $clubs_in_session=Matching::where('club1_id',$club1_id)->where('club1_id',$club1_id)->where('session_id',$session_id)->first();
+        $clubs_in_session=Matching::where('club1_id',$club1_id)->where('club2_id',$club2_id)->where('session_id',$session_id)->first();
         if($clubs_in_session){
-            return $this->apiResponse(null, false,'this match is already exist',400);
+            return $this->unAuthorizeResponse();
         }
         $matching=Matching::firstOrCreate( ['uuid'=>$uuid,
         'when' => $request->when,
@@ -166,12 +167,14 @@ class MatchingController extends Controller
             { $this->deleteFile($matching->plan_image);
             $image=$this->uploadImagePublic2($request,'match','image');
              if(!$image)
-           { return $this->apiResponse(null, false,'Failed to upload image',500);}
+           { return $this->apiResponse(null, false,['Failed to upload image'],500);}
 
             $matching->plan_image=$image;
             $matching->save();
-            return $this->apiResponse('uploaded successfully!');
-            }} catch (\Throwable $th) {
+       
+            }
+            return $this->apiResponse(['uploaded successfully!']);
+        } catch (\Throwable $th) {
           
             return $this->apiResponse(null,false,$th->getMessage(),500);
             }
@@ -187,9 +190,9 @@ class MatchingController extends Controller
         $matching=Matching::where('uuid',$uuid)->first(); 
         if($matching)
        { $matching->delete();
-        return $this->apiResponse("deleted successfuly!");}
+        return $this->apiResponse(["deleted successfuly!"]);}
         else{
-        return $this->notFoundResponse('not found match');
+        return $this->notFoundResponse(['not found match']);
         }
     } catch (\Throwable $th) {
           

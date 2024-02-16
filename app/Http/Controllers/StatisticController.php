@@ -23,10 +23,22 @@ class StatisticController extends Controller
         $matching=Matching::where('uuid',$uuid)->first();
         if(!$matching)
         {
-        return $this->notFoundResponse('not found match');
+        return $this->notFoundResponse(['not found match']);
         }
         $stat=Statistic::where('matching_id',$matching->id)->get();
        $stat=StatisticResource::collection($stat);
+      return $this->apiResponse($stat);
+    }
+
+    public function show($uuid)
+    {
+        $stat=Statistic::where('uuid',$uuid)->first();
+        if(!$stat)
+        {
+        return $this->notFoundResponse(['not found statistic']);
+        }
+ 
+       $stat=StatisticResource::make($stat);
       return $this->apiResponse($stat);
     }
 
@@ -48,7 +60,7 @@ class StatisticController extends Controller
            'name'=>$request->name, 
            'club1'=>$request->club1,
            'club2'=>$request->club2,  ],[
-            'uuid'=>'required|string||exists:matchings,uuid',
+           
             'name' => 'required|string|in:scores,scores_in_net,yellow_card,mistakes,offsides,corners',
             'club1'=>'required|integer|min:0|max:10',
             'club2' => 'required|integer|min:0|max:10',
@@ -59,12 +71,12 @@ class StatisticController extends Controller
         try{
         $matching=Matching::where('uuid',$uuid)->where('status','finished')->first();
         if(!$matching)
-        {return $this->notFoundResponse('not found match');}
+        {return $this->notFoundResponse(['not found match']);}
        $existStat=Statistic::where('matching_id',$matching->id)
        ->where('name',$request->name)->first();
        if($existStat)
        {
-        return $this->notFoundResponse('this Statistic has already exist ');
+        return $this->unAuthorizeResponse();
        }
     
         $uuidS=Str::uuid();
@@ -75,7 +87,7 @@ class StatisticController extends Controller
         'value'=>$value,
         'matching_id'=>$matching->id
         ]); 
-
+        return $this->apiResponse($stat);
    
     }
        catch (\Throwable $th) {
@@ -98,10 +110,7 @@ class StatisticController extends Controller
      * @param  \App\Models\Statistic  $statistic
      * @return \Illuminate\Http\Response
      */
-    public function edit(Statistic $statistic)
-    {
-        //
-    }
+  
 
     /**
      * Update the specified resource in storage.
@@ -117,8 +126,8 @@ class StatisticController extends Controller
         'club1'=>$request->club1,
         'club2'=>$request->club2,  ],[
          'uuid'=>'string||exists:statistics,uuid',
-         'club1'=>'integer|min:0|max:10',
-         'club2' => 'integer|min:0|max:10',
+         'club1'=>'min:0|max:10',
+         'club2' => 'min:0|max:10',
         
      ]);
      if($validate->fails()){
@@ -128,7 +137,7 @@ class StatisticController extends Controller
         $statistic=Statistic::where('uuid',$uuid)->first();
         if(!$statistic)
         {
-         return $this->notFoundResponse('not found match');
+         return $this->notFoundResponse(['not found match']);
         }
        
         $request->club1?
@@ -144,6 +153,7 @@ class StatisticController extends Controller
          'value'=>$value,
         
          ]); 
+         return $this->apiResponse(['update successfully!']);
     
        } catch (\Throwable $th) {
       
@@ -162,11 +172,11 @@ class StatisticController extends Controller
             $statistic=Statistic::where('uuid',$uuid)->first(); 
             if(!$statistic)
             {
-            return $this->notFoundResponse("not found");
+            return $this->notFoundResponse(["not found"]);
             }
             else   {
             $statistic->delete();
-            return $this->apiResponse("deleted successfully!");
+            return $this->apiResponse(["deleted successfully!"]);
         
          }
         } catch (\Throwable $th) {

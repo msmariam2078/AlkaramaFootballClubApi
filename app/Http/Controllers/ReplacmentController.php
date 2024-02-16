@@ -26,7 +26,7 @@ class ReplacmentController extends Controller
         $matching=Matching::where('uuid',$uuid)->first();
         if(!$matching)
         {
-        return $this->notFoundResponse('not found match');
+        return $this->notFoundResponse(['not found match']);
         }
         $reps=Replacment::where('matching_id',$matching->id)->get();
         $reps=ReplacmentResource::collection($reps);
@@ -67,7 +67,7 @@ class ReplacmentController extends Controller
     $matching=Matching::where('uuid',$uuid)->first();
     if(!$matching)
     {
-     return $this->notFoundResponse('not found');
+     return $this->notFoundResponse(['not found']);
     }
     $inplayer=Player::where('uuid',$request->inplayer_uuid)->first();
     $outplayer=Player::where('uuid',$request->outplayer_uuid)->first();
@@ -84,7 +84,7 @@ class ReplacmentController extends Controller
     ]);
      return $this->apiResponse($rep);
     }else {
-    return $this->requiredField('cannot add this replacment');
+    return $this->unAuthorizeResponse(['cannot add this replacment']);
     }}
     catch (\Throwable $th) {
           
@@ -106,7 +106,7 @@ class ReplacmentController extends Controller
         return $this->apiResponse($rep);
       }
       else{
-        return $this->notFoundResponse('this replacment not found');
+        return $this->notFoundResponse(['this replacment not found']);
       }}
       catch (\Throwable $th) {
     
@@ -131,39 +131,50 @@ class ReplacmentController extends Controller
      */
     public function update(Request $request,  $uuid)
     {
-        $validate = Validator::make(['inplayer_uuid'=>$request->inplayer_uuid,
-        'outplayer_uuid'=>$request->outplayer_uuid,],
+        $validate = Validator::make($request->all(),
         [
-            'inplayer_uuid' => 'required|string|exists:players,uuid',
-            'outplayer_uuid' => 'required|string|exists:players,uuid',
-            'uuid'=>'required|string|exists:replacments,uuid'
+            'inplayer_uuid' => 'string|exists:players,uuid',
+            'outplayer_uuid' => 'string|exists:players,uuid',
         ]);
         if($validate->fails()){
         return $this->requiredField($validate->errors()->first());    
         } 
-        try{
+      try{
+           
+          
         $rep=Replacment::where('uuid',$uuid)->first();
         if(!$rep)
         {
          return $this->notFoundResponse('not found');
         }
+    
         $inplayer=Player::where('uuid',$request->inplayer_uuid)->first();
         $outplayer=Player::where('uuid',$request->outplayer_uuid)->first(); 
-        $beanch_player= Plan::where('matching_id',$matching->id)
-        ->where('player_id',$inplayer->id)
-        ->where('status','beanch')->first();
+      
        
-        if($beanch_player&& $inplayer->id!=$outplayer->id)
+        if($inplayer)
+       {$beanch=Plan::where('player_id',$inplayer->id)
+              ->where('matching_id',$rep->matching_id)
+              ->where('status','beanch')
+              ->first();
+       if(!$beanch)
+       {
+        return $this->unAuthorizeResponse(['cannot add this replacment']);
+       }     
+            
+            
+ }
+        if($inplayer&&$outplayer&&$inplayer->id!=$outplayer->id)
         {
-        $rep->update([
-        'inplayer_id'=>$inplayer->id,
-        'outplayer_id'=>$outplayer->id,
-       
-        ]);
-         return $this->apiResponse('updated successfully!');
-        }else {
-        return $this->requiredField('cannot update this replacment');
-        }}
+            return $this->unAuthorizeResponse(['cannot add this replacment']);
+        }
+
+      $inplayer?$rep->inplayer_id=$inplayer->id:$rep->inplayer_id;
+      $outplayer?$rep->outplayer_id=$outplayer->id:$rep->outplayer_id;
+      $rep->save();
+
+         return $this->apiResponse(['updated successfully!']);
+    }
         catch (\Throwable $th) {
       
             return $this->apiResponse(null,false,$th->getMessage(),500);
@@ -181,11 +192,11 @@ class ReplacmentController extends Controller
         $rep=Replacment::where('uuid',$uuid)->first();
        
         if(!$rep)
-        {   return $this->notFoundResponse('cannot delete this replacment'); }
+        {   return $this->notFoundResponse(['cannot delete this replacment']); }
         else{
             $rep->delete();
 
-            return $this->apiResponse('deleted successfully!');
+            return $this->apiResponse(['deleted successfully!']);
         }
     }
     catch (\Throwable $th) {

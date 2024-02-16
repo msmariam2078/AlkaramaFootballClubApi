@@ -57,11 +57,16 @@ protected $fillable=[
                 return $this->morphOne(Information::class,'information_able');
                         
                  }
-         public function videos(){
+                 public function video(){
     
-            return $this->morphMany(Video::class);
-                        
-                        }
+                    return $this->morphOne(Video::class,'video_able');
+                            
+                     }
+                     public function videos(){
+    
+                        return $this->morphMany(Video::class,'video_able');
+                                
+                         }
       
   
 }

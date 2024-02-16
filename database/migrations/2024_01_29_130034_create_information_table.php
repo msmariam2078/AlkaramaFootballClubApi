@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('information', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->string('title');
-            $table->text('content');
-            $table->string('image');
-            $table->string('reads');
+            $table->string('title')->nullable();
+            $table->text('content')->nullable();
+            $table->string('image')->nullable();
+            $table->string('reads')->nullable();
             $table->enum('type',['regular','slider','news','strategy']);
     
             $table->morphs('information_able');

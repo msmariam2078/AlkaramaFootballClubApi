@@ -16,12 +16,14 @@ return new class extends Migration
         Schema::create('primes', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
+            $table->string('desc')->nullable();
             $table->string('name');
-            $table->string('descreption');
+         
+        
             $table->string('image');
             $table->enum('type',['personal','club']);
             $table->unsignedBigInteger("session_id");
-            $table->foreign("session_id")->references("id")->on("sessions")->onDelete("NO ACTION");
+            $table->foreign("session_id")->references("id")->on("sessions")->onDelete("NO ACTION")->nullable();
             $table->unsignedBigInteger("sport_id");
             $table->foreign("sport_id")->references("id")->on("sports")->onDelete("CASCADE");
             $table->unique(['name','session_id']);

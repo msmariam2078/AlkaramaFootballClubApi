@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('uuid');
             $table->morphs('video_able');
             $table->string('url')->unique();
-            $table->string('descreption');
+            $table->string('desc')->nullable();
             $table->timestamps();
         });
     }

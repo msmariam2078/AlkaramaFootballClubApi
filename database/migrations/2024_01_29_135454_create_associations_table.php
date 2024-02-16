@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('uuid');
             $table->string('boss');
             $table->string('image');
-            $table->string('descreption');
+            $table->string('descreption')->nullable();
             $table->string('country');
             $table->unsignedBigInteger("sport_id");
             $table->foreign("sport_id")->references("id")->on("sports")->onDelete("CASCADE");

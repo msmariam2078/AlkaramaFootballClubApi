@@ -29,11 +29,7 @@ class InformationController extends Controller
     return $this->requiredField($validate->errors()->first());    
      }
     try{
-    $information=Information::where('uuid',$uuid)->first();
-    if(!$information){
-    return $this->apiResponse('not found information');
-         }
-       
+    
      $information=Information::where('type',$request->type)->get();
      $information=InformationResource::collection($information);
      return $this->apiResponse($information);
@@ -61,9 +57,9 @@ class InformationController extends Controller
     {
         $validate = Validator::make($request->all(),[
         
-        'title' => 'string|min:20|max:100|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-        'content' => 'required|string|min:20|max:1000',
-        'image' => 'required|file|mimes:jpg,png,jpeg,jfif|max|2000',
+        'title' => 'min:10|max:100',
+        'content' => 'string|min:10|max:1000',
+        'image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
         "type"=>'required|string|in:news,regular,strategy,regular,slider'
             ]);
 
@@ -99,9 +95,9 @@ class InformationController extends Controller
     {
         $validate = Validator::make($request->all(),[
         
-        'title' => 'string|min:20|max:100|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-        'content' => 'required|string|min:20|max:1000',
-        'image' => 'required|file|mimes:jpg,png,jpeg,jfif|max:2000',
+        'title' => 'string|min:10|max:100',
+        'content' => 'string|min:10|max:1000',
+        'image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
         "type"=>'required|string|in:news,regular,strategy,regular,slider'
         ]);
         if($validate->fails()){
@@ -143,9 +139,9 @@ class InformationController extends Controller
     {
     $validate = Validator::make($request->all(),[
         
-    'title' => 'string|min:20|max:100|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
-    'content' => 'required|string|min:20|max:1000',
-    'image' => 'required|file|mimes:jpg,png,jpeg,jfif|max:2000',
+    'title' => 'string|min:20|max:100',
+    'content' => 'string|min:20|max:1000',
+    'image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
     "type"=>'required|string|in:news,regular,strategy,regular,slider'
      ]);
     if($validate->fails()){
@@ -185,11 +181,11 @@ class InformationController extends Controller
      * @param  \App\Models\Information  $information
      * @return \Illuminate\Http\Response
      */
-    public function show( $uuid)
+    public function show($uuid)
     { try{
         $information=Information::where('uuid',$uuid)->first();
         if(!$information){
-        return $this->notFoundResponse('not found information');
+        return $this->notFoundResponse(['not found information']);
          }
          else{
          $matching=InformationResource::make($information);
@@ -219,8 +215,8 @@ class InformationController extends Controller
     public function update(Request $request,  $uuid)
     {
         $validate = Validator::make($request->all(),[
-            'title' => 'string|min:20|max:100',
-            'content' => '|string|min:20|max:1000',
+            'title' => 'string|min:5|max:100',
+            'content' => '|string|min:10|max:1000',
             'image_file' => '|file|mimes:jpg,png,jpeg,jfif|max:2000',
             "type"=>'|string|in:news,regular,strategy,regular,slider'
 
@@ -231,6 +227,10 @@ class InformationController extends Controller
             try{
                 $image='';
                 $information=Information::where('uuid',$uuid)->first();
+                if(!$information)
+                {
+                    return $this->apiResponse(null,false,['not found'],404);
+                }
                 $information->update($request->all());
                 if($request->image_file)
                 { $this->deleteFile($information->image);
@@ -238,7 +238,7 @@ class InformationController extends Controller
                 $information->image=$image;
                 $information->save();
                 }
-                return $this->apiResponse('updated successfully!');
+                return $this->apiResponse(['updated successfully!']);
               } catch (\Throwable $th) {
               
                 return $this->apiResponse(null,false,$th->getMessage(),500);
@@ -256,11 +256,11 @@ class InformationController extends Controller
         $information=Information::where('uuid',$uuid)->first(); 
         if(!$information)
         {
-        return $this->notFoundResponse("not found");
+        return $this->notFoundResponse(["not found"]);
         }
         else   {
-        $club->delete();
-        return $this->apiResponse("deleted successfully!");
+        $information->delete();
+        return $this->apiResponse(["deleted successfully!"]);
     
      }
     } catch (\Throwable $th) {

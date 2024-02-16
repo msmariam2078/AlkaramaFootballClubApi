@@ -16,8 +16,8 @@ class InformationResource extends JsonResource
     {
         return [
        'uuid'=>$this->uuid,
-        'info_about_uuid'=>$this->information_able->uuid,
-        'info_about_name'=>$this->information_able->name?$this->information_able->name:'match',
+        // 'info_about_uuid'=>$this->information_able->uuid,
+        // 'info_about_name'=>$this->information_able->name?$this->information_able->name:'match',
         'title'=>$this->title,
       'content'=>$this->content,
       'image'=>$this->image,

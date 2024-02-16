@@ -19,7 +19,7 @@ protected $casts=[
 
     'uuid'=>'string',
     "name"=>'string',
-    'start_year'=>'year',
+     "start_year"=>'integer',
     'image'=>'string',
     
 ];

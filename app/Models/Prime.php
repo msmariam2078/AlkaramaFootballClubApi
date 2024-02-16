@@ -12,7 +12,7 @@ class Prime extends Model
     protected $fillable = [
         'uuid',
         'name',
-        'description',
+        'desc',
         'image',
         'type',
         'session_id',
@@ -22,7 +22,7 @@ class Prime extends Model
     protected $casts = [
         'uuid' => 'string',
         'name' => 'string',
-        'description' => 'string',
+        'desc' => 'string',
         'image' => 'string',
         'type' => 'string',
         'session_id' => 'integer',

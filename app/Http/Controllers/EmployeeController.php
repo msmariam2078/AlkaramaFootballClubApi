@@ -32,9 +32,9 @@ class EmployeeController extends Controller
 
     }
 
-    public function show(Request $request)
+    public function showByType(Request $request)
     {    
-        if($request->job_type=='manager')
+        if($request->jobtype=='manager')
         {
         $manager=Employee::where('job_type','manager')->get();
         $manager=EmployeeResource::collection($manager);
@@ -49,14 +49,26 @@ class EmployeeController extends Controller
 
 
     }
+
+    public function show($uuid){
+ 
+        $employee=Employee::where('uuid',$uuid)->first();
+        if(!$employee)
+        {
+            return $this->apiResponse(null,false,'not found',404);  
+        }
+        $employee=EmployeeResource::make($employee);
+        return $this->apiResponse($employee);
+
+    }
     
     public function store(Request $request)
     {
        
             $validate = Validator::make($request->all(),[
-            'name' => 'string|min:2|max:20|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+            'name' => 'string|min:2|max:20|required',
             'job_type' => 'required|string|in:manager,coach',
-            'work' => 'required|string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+            'work' => 'required|string',
             'image' => 'required|file|mimes:jpg,png,jpeg,jfif|max:2000',
             "sport_uuid"=>'required|string|exists:sports,uuid'
             ]);
@@ -90,9 +102,9 @@ class EmployeeController extends Controller
     public function update(Request $request, $uuid)
     {
             $validate = Validator::make($request->all(),[
-                'name' => 'string|min:2|max:20|required|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+                'name' => 'string|min:2|max:20',
                 'job_type' => 'string|in:manager,coach',
-                'work' => 'string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+                'work' => 'string',
                 'img' => 'file|mimes:jpg,png,jpeg,jfif',
                 "sport_uuid"=>'string|exists:sports,uuid']);
             if($validate->fails()){
@@ -107,13 +119,13 @@ class EmployeeController extends Controller
             $image=$this->uploadImagePublic2($request,'employee','img');
             if(!$image)
             {
-            return  $this->apiResponse(null, false,'Failed to upload image',500);
+            return  $this->apiResponse(null, false,['Failed to upload image'],500);
             }
             $employee->image=$image;
             $employee->save();
             }
          
-            return $this->apiResponse('uploaded successfully!');
+            return $this->apiResponse(['uploaded successfully!']);
         
         } catch (\Throwable $th) {
           
@@ -136,7 +148,7 @@ class EmployeeController extends Controller
             $employee->delete();
             return $this->apiResponse(["succssifull delete"],true,null,201);}
         else {
-         return $this->notFoundResponse('notfound');
+         return $this->notFoundResponse(['not found']);
         
         }
  

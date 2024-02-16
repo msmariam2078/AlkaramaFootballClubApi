@@ -13,10 +13,7 @@ class Session extends Model
       "name",
       "start_date",
       "end_date"
-             
- 
-        
-        
+                    
         ];
         protected $casts=[
         
@@ -38,7 +35,7 @@ class Session extends Model
           
         public function matchings(){
         
-            return $this->hasMany(Matchng::class);
+            return $this->hasMany(Matching::class);
             
             }
             public function standings(){

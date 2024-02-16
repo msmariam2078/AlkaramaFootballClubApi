@@ -29,12 +29,12 @@ class Standing extends Model
         ];
         public function session(){
 
-            return $this->belongTo(Session::class);
+            return $this->belongsTo(Session::class);
             
             }
             public function club(){
 
-                return $this->belongTo(Club::class);
+                return $this->belongsTo(Club::class);
                 
                 }
 

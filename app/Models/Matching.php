@@ -42,7 +42,7 @@ protected $fillable=[
         }
         public function session(){
 
-            return $this->belongsTo(session::class);
+            return $this->belongsTo(Session::class);
             
             }
             public function statistic(){
@@ -70,11 +70,17 @@ protected $fillable=[
                                 return $this->morphOne(Information::class,'information_able');
                                 
                                 }
-                            public function videos(){
+                            public function video(){
     
-                                return $this->morphMany(Video::class);
+                                return $this->morphMany(Video::class,'video_able');
                                 
                                 }
+                                public function videos(){
+    
+                                    return $this->morphMany(Video::class,'video_able');
+                                    
+                                    }
+    
 
 
 

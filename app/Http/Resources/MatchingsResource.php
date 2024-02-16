@@ -2,6 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\PlanResource;
+use App\Http\Resources\ReplacmentResource;
+use App\Http\Resources\StatisticResource;
+use App\Http\Resources\InformationResource;
+use App\Http\Resources\VideoResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class MatchingsResource extends JsonResource
@@ -15,6 +20,7 @@ class MatchingsResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'uuid'=>$this->uuid,
          'first_club'=>$this->club1->name,
          'first_club_logo'=>$this->club1->logo,
          'second_club'=>$this->club2->name,
@@ -27,7 +33,12 @@ class MatchingsResource extends JsonResource
          'channel'=>$this->channel,
          'round'=>$this->round,
          'play_ground'=>$this->play_ground,
-         "session"=>$this->session->name." ".$this->session->start_date->format('Y')."-".$this->session->end_date->format('Y')
+         "session"=>$this->session->name." ".$this->session->start_date->format('Y')."-".$this->session->end_date->format('Y'),
+         'plan'=>PlanResource::collection($this->plans),
+         'replacement'=>ReplacmentResource::collection($this->replacments),
+         'statistics'=>StatisticResource::make($this->statistic),
+         'videos'=>videoResource::collection($this->videos)
+      
         ];
     }
 }
