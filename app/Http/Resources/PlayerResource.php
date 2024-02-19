@@ -16,7 +16,7 @@ class PlayerResource extends JsonResource
     {
         return [
             'uuid'=>$this->uuid,
-            'image'=>$this->image,
+            'image'=>env('P').$this->image,
             'name'=>$this->name,
             'born'=>$this->from."  ".$this->born->format('d M  Y'),
             'high'=>$this->high."cm",

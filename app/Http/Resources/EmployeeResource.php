@@ -16,7 +16,7 @@ class EmployeeResource extends JsonResource
     {
         return [
             'uuid'=>$this->uuid,
-            'image'=>$this->image,
+            'image'=>env('P').$this->image,
             'name'=>$this->name,
             'work'=>$this->work,
         ];

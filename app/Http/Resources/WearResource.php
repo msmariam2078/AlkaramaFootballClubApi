@@ -16,7 +16,7 @@ class WearResource extends JsonResource
     {
         return [
      'uuid'=>$this->uuid,
-     'image'=>$this->image,
+     'image'=>env('P').$this->image,
      "session"=>$this->session->name." ".$this->session->start_date->format('Y')."-".$this->session->end_date->format('Y'),
      'sport'=>$this->sport->name
         ];

@@ -20,7 +20,7 @@ class InformationResource extends JsonResource
         // 'info_about_name'=>$this->information_able->name?$this->information_able->name:'match',
         'title'=>$this->title,
       'content'=>$this->content,
-      'image'=>$this->image,
+      'image'=>env('P').$this->image,
       'reads'=>$this->reads,
       'type'=>$this->type
 

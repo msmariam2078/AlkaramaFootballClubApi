@@ -62,7 +62,7 @@ Route::get('/remove/statistic/{uuid}',[App\Http\Controllers\StatisticController:
 
 //...information
 Route::get('view/type/informations',[App\Http\Controllers\InformationController::class,'indexByType']);
-Route::get('view/information/{uuid}',[App\Http\Controllers\InformationController::class,'show']);
+Route::get('/view/information/{uuid}',[App\Http\Controllers\InformationController::class,'show']);
 Route::post('add/information/match/{uuid}',[App\Http\Controllers\InformationController::class,'informationMatch']);
 Route::post('add/information/club/{uuid}',[App\Http\Controllers\InformationController::class,'informationClub']);
 Route::post('add/information/session/{uuid}',[App\Http\Controllers\InformationController::class,'informationSession']);

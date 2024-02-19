@@ -19,7 +19,7 @@ class ClubResource extends JsonResource
            'uuid'=>$this->uuid, 
           'name'=>$this->name,
           'address'=>$this->address,
-          'logo'=>$this->logo,
+          'logo'=>env('P').$this->logo,
           'videos'=>VideoResource::collection($this->videos)
           
 

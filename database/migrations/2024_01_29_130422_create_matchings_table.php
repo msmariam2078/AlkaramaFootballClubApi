@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->datetime("when");
-            $table->enum('status',['not_started','finished']);
+            $table->enum('status',['not_started','finished','live']);
             $table->string('plan_image');
             $table->string('channel');
             $table->string('round')->unique();

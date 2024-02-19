@@ -19,7 +19,7 @@ class BossResource extends JsonResource
             'uuid'=>$this->uuid,
             'name'=>$this->name,
             'year'=>$this->start_year,
-            'image'=>$this->image,
+            'image'=>env('P').$this->image,
        ];
     }
 }

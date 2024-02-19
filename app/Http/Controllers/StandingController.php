@@ -30,6 +30,7 @@ class StandingController extends Controller
         $session=Session::where('name',$request->session_name)
                         ->where('end_date',$request->date)
                         ->first();
+                        dd($session);
         if(!$session)
         {
             return $this->notFoundResponse($session); 

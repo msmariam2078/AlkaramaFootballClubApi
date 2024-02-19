@@ -32,7 +32,7 @@ class MatchingController extends Controller
     public function indexByStatus(Request $request)
     {   $validate = Validator::make($request->all(),[
         
-        'status' => 'required|string|in:finished,not_started',
+        'status' => 'required|string|in:finished,not_started,live',
     ]);
         if($validate->fails()){
         return $this->requiredField($validate->errors()->first()); }
@@ -89,7 +89,7 @@ class MatchingController extends Controller
    
         $validate = Validator::make($request->all(),[
         'when' => 'required|date',
-        'status'=>'required|string|in:not_started,finished',
+        'status'=>'required|string|in:not_started,finished,live',
         'plan_image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
         'channel'=>'required|string',
         'round'=>'required|string',
@@ -150,9 +150,9 @@ class MatchingController extends Controller
             'when' => 'date',
             'status'=>'string|in:not_started,finished',
             'image' => 'file|mimes:jpg,png,jpeg,jfif',
-            'channel'=>'string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+            'channel'=>'string',
             'round'=>'string',
-            'play_ground'=>'string|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/',
+            'play_ground'=>'string',
         
         
             ]);

@@ -188,7 +188,7 @@ class InformationController extends Controller
         return $this->notFoundResponse(['not found information']);
          }
          else{
-         $matching=InformationResource::make($information);
+         $information=InformationResource::make($information);
          return $this->apiResponse($information);
          }
         } catch (\Throwable $th) {

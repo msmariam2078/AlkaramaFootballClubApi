@@ -21,3 +21,8 @@ Route::get('/', function () {
 Route::get('lang/change/{lang}', [App\Http\Controllers\languagwController::class, 'change'])->name('changeLang');
 Route::get('/view', [App\Http\Controllers\languagwController::class, 'index']);
 Route::get('/store', [App\Http\Controllers\languagwController::class, 'store']);
+Route::get('/foo', function () {
+
+    Artisan::call('storage:link');
+    echo "hi";
+});

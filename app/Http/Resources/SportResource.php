@@ -17,7 +17,7 @@ class SportResource extends JsonResource
         return [
        'uuid'=>$this->uuid,
        "name"=>$this->name,
-       'image'=>$this->image,
+       'image'=>env('P').$this->image,
        'clubs'=>ClubResource::collection($this->clubs)
 
         ];

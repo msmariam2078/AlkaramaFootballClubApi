@@ -29,7 +29,7 @@ class MatchingsResource extends JsonResource
          'when'=>$this->when->format('d M  Y H:i:S'),
          'round'=>$this->round,
          'status'=>$this->status,
-         'plan_image'=>$this->plan_image,
+         'plan_image'=>env('P').$this->plan_image,
          'channel'=>$this->channel,
          'round'=>$this->round,
          'play_ground'=>$this->play_ground,

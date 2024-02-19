@@ -18,7 +18,7 @@ class AssociationResource extends JsonResource
         return[
             'uuid'=>$this->uuid,
             'boss'=>$this->boss,
-            'image'=>$this->image,
+            'image'=>env('P').$this->image,
             'descreption'=>$this->descreption,
             'country'=>$this->country,
             'memebers'=>TopfanResource::collection($this->topfans)

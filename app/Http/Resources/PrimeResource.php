@@ -21,7 +21,7 @@ class PrimeResource extends JsonResource
         return[
             'uuid'=>$this->uuid,
             'name' => $this->name,
-            'image' => $this->image,
+            'image' =>env('P').$this->image,
         
             'descreption'=>$this->desc,
             'type'=>$this->type,
