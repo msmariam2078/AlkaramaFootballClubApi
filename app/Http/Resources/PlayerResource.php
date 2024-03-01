@@ -18,7 +18,7 @@ class PlayerResource extends JsonResource
             'uuid'=>$this->uuid,
             'image'=>env('P').$this->image,
             'name'=>$this->name,
-            'born'=>$this->from."  ".$this->born->format('d M  Y'),
+            'born'=>$this->born->format('Y-m-d')." ".$this->from,
             'high'=>$this->high."cm",
             'age'=>Carbon::createFromDate($this->born)->age."عام",
             'number'=>$this->number,

@@ -106,7 +106,8 @@ Route::get('/remove/sport/{uuid}',[App\Http\Controllers\SportController::class,'
 
 //wear
 Route::get('/view/wears',[App\Http\Controllers\WearController::class,'index']);
-Route::get('/view/session/wears',[App\Http\Controllers\WearController::class,'showBySession']);
+
+Route::get('/view/session/status/wears',[App\Http\Controllers\WearController::class,'showbyStatus']);
 Route::post('/add/wear',[App\Http\Controllers\WearController::class,'store']);
 Route::post('/edit/wear/{uuid}',[App\Http\Controllers\WearController::class,'update']);
 Route::get('/remove/wear/{uuid}',[App\Http\Controllers\WearController::class,'destroy']);
@@ -115,7 +116,8 @@ Route::get('/remove/wear/{uuid}',[App\Http\Controllers\WearController::class,'de
 Route::post('/add/club/video/{uuid}',[App\Http\Controllers\VideoController::class,'clubVideo']);
 Route::post('/edit/video/{uuid}',[App\Http\Controllers\VideoController::class,'update']);
 Route::post('/add/match/video/{uuid}',[App\Http\Controllers\VideoController::class,'matchVideo']);
-Route::post('/add/association/video/{uuid}',[App\Http\Controllers\VideoController::class,'associationVideo']);
+Route::post('/add/
+/video/{uuid}',[App\Http\Controllers\VideoController::class,'associationVideo']);
 Route::get('/remove/video/{uuid}',[App\Http\Controllers\VideoController::class,'destroy']);
 //...boss
 Route::get('/view/boss',[App\Http\Controllers\BossController::class,'index']);
@@ -142,3 +144,5 @@ Route::post('/edit/standing/{uuid}',[App\Http\Controllers\StandingController::cl
 
 Route::get('/view/standing',[App\Http\Controllers\StandingController::class,'index']);
 Route::get('/remove/standing/{uuid}',[App\Http\Controllers\StandingController::class,'destroy']);
+
+

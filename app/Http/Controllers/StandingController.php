@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Validator;
 class StandingController extends Controller
 {
     use GeneralTrait;
+
+  
    
     public function index(Request $request)
     {
         $validate = Validator::make($request->all(),[
-            'session_name'=>'string|exists:session,name',
+            'session_name'=>'string|exists:sessions,name',
             'date'=>'date',
      
         
@@ -30,7 +32,7 @@ class StandingController extends Controller
         $session=Session::where('name',$request->session_name)
                         ->where('end_date',$request->date)
                         ->first();
-                        dd($session);
+                        
         if(!$session)
         {
             return $this->notFoundResponse($session); 

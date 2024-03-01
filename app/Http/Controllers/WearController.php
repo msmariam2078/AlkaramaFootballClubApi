@@ -22,35 +22,40 @@ public function index(){
     $wears=WearResource::collection($wears);
      return $this->apiResponse($wears);
      }
-
-
-
-     public function showBySession(Request $request)
+     
+     public function showbyStatus(Request $request)
      {
-         $validate = Validator::make($request->all(),[
-             'session' => 'required|string|exists:sessions,uuid',
-          ]);
-         if($validate->fails()){
-             return $this->requiredField($validate->errors()->first());    
-             }
-      try{
-        
-     $session=Session::where('uuid',$request->session)->first();
 
- dd($session);
+      $validate = Validator::make($request->all(),[
+        'session' => 'required|string|exists:sessions,uuid',
+     ]);
+    if($validate->fails()){
+        return $this->requiredField($validate->errors()->first());    
+        }
+      try{
+
+    $session=Session::where('uuid',$request->input('session'))->first();
+   
+     
       $wears=Wear::where('session_id',$session->id)->get();
  
   
-     $wears=WearResource::collection($wears); 
-     //dd($wears);
-   return $this->apiResponse($wears);
-      }catch (\Throwable $th) {
+      $wears=WearResource::collection($wears); 
+    
+     return $this->apiResponse($wears);
+    }catch (\Throwable $th) {
        
-         return $this->apiResponse(null,false,$th->getMessage(),500);
-         }
-      
- 
+      return $this->apiResponse(null,false,$th->getMessage(),500);
       }
+
+     }
+
+
+    
+    
+
+
+
 
 
 

@@ -54,7 +54,7 @@ class MatchingController extends Controller
         if($validate->fails()){
         return $this->requiredField($validate->errors()->first()); }
        try{
-        $matchings=Matching::whereDate('when', '=', $request->when)->get();
+        $matchings=Matching::whereDate('when', $request->when)->get();
          $matchings=MatchingsResource::collection($matchings);
          return $this->apiResponse($matchings);
        }catch (\Throwable $th) {
@@ -88,11 +88,11 @@ class MatchingController extends Controller
     {
    
         $validate = Validator::make($request->all(),[
-        'when' => 'required|date',
+        'when' => 'required|date|unique:matchings,when',
         'status'=>'required|string|in:not_started,finished,live',
         'plan_image' => 'file|mimes:jpg,png,jpeg,jfif|max:2000',
         'channel'=>'required|string',
-        'round'=>'required|string',
+        'round'=>'required|string|unique:matchings,round',
         'play_ground'=>'required|min:4|max:20|string',
         'session_uuid'=>'required|string|exists:sessions,uuid',
         'club1_uuid'=>'required|string|exists:clubs,uuid',

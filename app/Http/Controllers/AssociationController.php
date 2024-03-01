@@ -47,7 +47,7 @@ class AssociationController extends Controller
         {
         
             $validate = Validator::make($request->all(),[
-                'boss' =>'string|min:2|max:20|required',
+                'boss' =>'string|min:2|max:50|required',
                 'descreption'=>'string|min:10|max:255',
                 'country' =>'required|string',
                 'image'=>'required|file|mimes:jpg,png,jpeg,jfif',

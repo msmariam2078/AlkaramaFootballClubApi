@@ -63,7 +63,7 @@ class BossController extends Controller
     {
       $validate= Validator::make($request->all(),[
         "name"=>"string|required|min:3|max:20",
-        "start_year"=>'required|digits:4|integer|min:1900|max:2024',
+        "start_year"=>'required|digits:4|integer|min:1900|max:2024|unique:bosses,start_year',
         "image" =>"required|file|mimes:jpg,png,jpeg,jfif|max:2000",
         ]);
         
@@ -108,7 +108,7 @@ class BossController extends Controller
     {
         $validate= Validator::make($request->all(),[
             "name"=>"string|min:3|max:20|regex:/(^[a-zA-Z][a-zA-Z\s]{0,20}[a-zA-Z]$)/",
-            "start_year"=>'digits:4|integer|min:1900|max:',
+            "start_year"=>'digits:4|integer|min:1900|max:2024|unique:bosses,start_year',
             "image_boss" =>"file|mimes:jpg,png,jpeg,jfif",
         ]);
         

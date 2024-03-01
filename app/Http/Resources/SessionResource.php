@@ -18,8 +18,8 @@ class SessionResource extends JsonResource
         return [
         'uuid'=>$this->uuid,
         'name'=>$this->name,
-        'start_date'=>$this->start_date,
-        'end_date'=>$this->end_date,
+        'start_date'=>$this->start_date->format('Y-m-d'),
+        'end_date'=>$this->end_date->format('Y-m-d'),
       
         'standings'=>StandingResource::collection($this->standings)
 

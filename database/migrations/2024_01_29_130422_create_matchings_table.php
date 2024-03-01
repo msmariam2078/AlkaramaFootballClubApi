@@ -28,8 +28,7 @@ return new class extends Migration
             $table->foreign("club1_id")->references("id")->on("clubs")->onDelete("CASCADE");
             $table->unsignedBigInteger("club2_id");
             $table->foreign("club2_id")->references("id")->on("clubs")->onDelete("CASCADE");
-            $table->unique(['club1_id','when']);
-            $table->unique(['club2_id','when']);
+         
             $table->unique(['club1_id','club2_id','session_id']);
             
             $table->timestamps();
